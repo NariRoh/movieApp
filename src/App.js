@@ -23,7 +23,23 @@ const movies = [
 ]
 
 class App extends Component {
+  // Render: componentWillMount() -> render() -> componentDidMount()
+
+  // Update: componentWillReceiveProps() -> shouldComponentUpdate() -> componentWillUpdate() -> render() ->
+  // when component gets new props / when component(old and new one) is different, it's true / 
+
+  componentWillMount() {
+    console.log('will mount');
+    // when componentWillMount, we'll request API
+  }
+
+  componentDidMount() {
+    console.log('did mount');
+    // means coponent is successfully rendered
+  }
+
   render() {
+    console.log('did render');
     return (
       <div className="App">
         {movies.map( (movie, index) => {
