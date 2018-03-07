@@ -23,24 +23,6 @@ class App extends Component {
 
   state = {
     // greeting: 'Hello!',
-    movies: [
-      {
-        title: "Matrix",
-        poster:   "https://upload.wikimedia.org/wikipedia/en/0/06/Ultimate_Matrix_Collection_poster.jpg"
-      },
-      {
-        title: "Full Metal Jacket",
-        poster:   "https://resizing.flixster.com/LtoVIF3TxiP3c9wtzPscteMXqG4=/206x305/v1.bTsxMTE2ODAyOTtqOzE3Njc5OzEyMDA7ODAwOzEyMDA"
-      },
-      {
-        title: "Oldboy",
-        poster:   "https://upload.wikimedia.org/wikipedia/en/thumb/6/67/Oldboykoreanposter.jpg/220px-Oldboykoreanposter.jpg"
-      },
-      {
-        title: "Star Wars",
-        poster:   "http://img.moviepostershop.com/star-wars-movie-poster-1977-1010460445.jpg"
-      }
-    ]
   }
 
   // After the component renders
@@ -55,29 +37,61 @@ class App extends Component {
     setTimeout(() => {
       this.setState({
         movies: [
-          ...this.state.movies,
-          // 👆 set the state of movies array like this: leave the array as it is (leave the list of the movies) and add one more movie.
-          // without this line, it will replace the list
           {
-            title: "Trainspotting",
-            poster: "https://resizing.flixster.com/NCi30AewMxJnsjlAHJLaENLECLU=/206x305/v1.bTsxMTE3NjEwNztqOzE3Njc5OzEyMDA7ODAwOzEyMDA"
+            title: "Matrix",
+            poster:   "https://upload.wikimedia.org/wikipedia/en/0/06/Ultimate_Matrix_Collection_poster.jpg"
+          },
+          {
+            title: "Full Metal Jacket",
+            poster:   "https://resizing.flixster.com/LtoVIF3TxiP3c9wtzPscteMXqG4=/206x305/v1.bTsxMTE2ODAyOTtqOzE3Njc5OzEyMDA7ODAwOzEyMDA"
+          },
+          {
+            title: "Oldboy",
+            poster:   "https://upload.wikimedia.org/wikipedia/en/thumb/6/67/Oldboykoreanposter.jpg/220px-Oldboykoreanposter.jpg"
+          },
+          {
+            title: "Star Wars",
+            poster:   "http://img.moviepostershop.com/star-wars-movie-poster-1977-1010460445.jpg"
           }
-          // ...this.state.movies
-          // 👆 when this line is here, it adds the new one on the top 
         ]
+        // movies: [
+        //   ...this.state.movies,
+        //   // 👆 set the state of movies array like this: leave the array as it is (leave the list of the movies) and add one more movie.
+        //   // without this line, it will replace the list
+        //   {
+        //     title: "Trainspotting",
+        //     poster: "https://resizing.flixster.com/NCi30AewMxJnsjlAHJLaENLECLU=/206x305/v1.bTsxMTE3NjEwNztqOzE3Njc5OzEyMDA7ODAwOzEyMDA"
+        //   }
+        //   // ...this.state.movies
+        //   // 👆 when this line is here, it adds the new one on the top
+        // ]
       })
-    }, 1000)
+    }, 5000)
   }
 
+  // 👇 _underscore for function name: to make React fn and your own fn different since React has lots of functions
+  _renderMovies = () => {
+    const movies = this.state.movies.map((movie, index) => {
+      return <Movie title={movie.title} poster={movie.poster} key={index} />
+    })
+    /*
+      👆 same as,
+      const movies = [<Movie props />, <Movie props />]
+    */
+    return movies;
+  }
 
   render() {
     // console.log('did render');
     return (
       <div className="App">
         {/* {this.state.greeting} */}
-        {this.state.movies.map( (movie, index) => {
+        {/* {this.state.movies.map( (movie, index) => {
           return <Movie title={movie.title} poster={movie.poster} key={index} />
-        })}
+        })} */}
+        {/* whenever the movies are not in the state, we'll show 'Loading' or the list of movies */}
+        {/* When you use API, data won't be saved in the state so we used this ternary statement to ask wether we have the data saved or not */}
+        {this.state.movies ? this._renderMovies() : 'Loading'}
       </div>
     );
   }
