@@ -45,6 +45,7 @@ class App extends Component {
         //   // ...this.state.movies
         //   // 👆 when this line is here, it adds the new one on the top
         // ]
+    // Fetch() returns a promise, A promise() gives you the abaility to do .then and .catch(to handle sinarios)
     fetch("https://yts.am/api/v2/list_movies.json?sort_by=rating")
     .then(response => response.json())
     .then(json => console.log(json))
