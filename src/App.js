@@ -34,26 +34,6 @@ class App extends Component {
     //     greeting: 'Hello agian!'
     //   })
     // }, 5000)
-    setTimeout(() => {
-      this.setState({
-        movies: [
-          {
-            title: "Matrix",
-            poster:   "https://upload.wikimedia.org/wikipedia/en/0/06/Ultimate_Matrix_Collection_poster.jpg"
-          },
-          {
-            title: "Full Metal Jacket",
-            poster:   "https://resizing.flixster.com/LtoVIF3TxiP3c9wtzPscteMXqG4=/206x305/v1.bTsxMTE2ODAyOTtqOzE3Njc5OzEyMDA7ODAwOzEyMDA"
-          },
-          {
-            title: "Oldboy",
-            poster:   "https://upload.wikimedia.org/wikipedia/en/thumb/6/67/Oldboykoreanposter.jpg/220px-Oldboykoreanposter.jpg"
-          },
-          {
-            title: "Star Wars",
-            poster:   "http://img.moviepostershop.com/star-wars-movie-poster-1977-1010460445.jpg"
-          }
-        ]
         // movies: [
         //   ...this.state.movies,
         //   // 👆 set the state of movies array like this: leave the array as it is (leave the list of the movies) and add one more movie.
@@ -65,8 +45,10 @@ class App extends Component {
         //   // ...this.state.movies
         //   // 👆 when this line is here, it adds the new one on the top
         // ]
-      })
-    }, 5000)
+    fetch("https://yts.am/api/v2/list_movies.json?sort_by=rating")
+    .then(response => response.json())
+    .then(json => console.log(json))
+    .catch(err => console.log(err))
   }
 
   // 👇 _underscore for function name: to make React fn and your own fn different since React has lots of functions
@@ -92,6 +74,7 @@ class App extends Component {
         {/* whenever the movies are not in the state, we'll show 'Loading' or the list of movies */}
         {/* When you use API, data won't be saved in the state so we used this ternary statement to ask wether we have the data saved or not */}
         {this.state.movies ? this._renderMovies() : 'Loading'}
+        {/* 👆 for that you need a state object whatever it's empty state = {} */}
       </div>
     );
   }
