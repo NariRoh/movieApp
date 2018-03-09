@@ -46,22 +46,46 @@ class App extends Component {
         //   // 👆 when this line is here, it adds the new one on the top
         // ]
     // Fetch() returns a promise, A promise() gives you the abaility to do .then and .catch(to handle sinarios)
-    fetch("https://yts.am/api/v2/list_movies.json?sort_by=rating")
-    .then(response => response.json())
-    .then(json => console.log(json))
-    .catch(err => console.log(err))
+
+    // fetch("https://yts.am/api/v2/list_movies.json?sort_by=rating")
+    // .then(response => response.json())
+    // .then(json => console.log(json))
+    // .catch(err => console.log(err))
+
+    // To avoid CALLBACK HELL we use async & await
+    // spread your functions  which are inside componentDidMount
+    this._getMovies();
   }
 
   // 👇 _underscore for function name: to make React fn and your own fn different since React has lots of functions
   _renderMovies = () => {
-    const movies = this.state.movies.map((movie, index) => {
-      return <Movie title={movie.title} poster={movie.poster} key={index} />
+    const movies = this.state.movies.map(movie => {
+      // console.log(movie);
+      return <Movie title={movie.title} poster={movie.large_cover_image} key={movie.id} />
     })
     /*
       👆 same as,
       const movies = [<Movie props />, <Movie props />]
     */
     return movies;
+  }
+
+  _getMovies = async () => {
+    const movies = await this._callApi()
+    //
+    this.setState({
+      // movies: movies
+      movies
+    })
+  }
+
+  _callApi = () => {
+    return fetch("https://yts.am/api/v2/list_movies.json?sort_by=rating")
+    .then(response => response.json())
+    .then(json => json.data.movies)
+    // .then(json => json.data.movie)
+    // arrow function if there is no {}, no need to put 'return '
+    .catch(err => console.log(err))
   }
 
   render() {
